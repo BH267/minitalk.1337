@@ -14,6 +14,7 @@
 # define MTH_H
 
 # include <signal.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 void	ft_putchar(int c);

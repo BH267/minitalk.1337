@@ -12,16 +12,19 @@
 
 #include "mth.h"
 
-void send_bit(int pid, int bit)
+int	g_i = 0;
+
+void	send_bit(int pid, int bit)
 {
 	if (bit)
 		kill(pid, SIGUSR1);
 	else
 		kill(pid, SIGUSR2);
-	usleep(1);
+	g_i++;
+	usleep(100);
 }
 
-void send_char(int pid, char c)
+void	send_char(int pid, char c)
 {
 	int	i;
 
@@ -39,19 +42,30 @@ void	send_msg(int pid, char *str)
 
 void	received(int sig)
 {
+	int	x;
+
+	x = 0;
 	if (sig == SIGUSR1)
-		ft_putstr("safi rah wsal ✅");
+		x++;
+	if (x == g_i)
+		ft_putstr("\033[38;2;0;255;0m		safi rah wsal ✅\n\033[0m");
 }
+
 int	main(int ac, char **av)
 {
-	int	pid;
+	int					pid;
+	struct sigaction	awdi;
 
 	if (ac != 3)
 	{
-		ft_putstr("la ghit 2 arg.. [ ./client <pid> <message> ]");
+		ft_putstr("		la ghit 2 arg.. [ ./client <pid> <message> ]\n");
 		return (1);
 	}
 	pid = ft_atoi(av[1]);
-	signal(SIGUSR1, received);
+	if (pid == -1)
+		return (ft_putstr("\033[38;2;255;0;0m		ashawa kadir\n\033[0m"), 1);
+	awdi.sa_handler = received;
+	awdi.sa_flags = 0;
+	sigaction(SIGUSR1, &awdi, NULL);
 	send_msg(pid, av[2]);
 }
