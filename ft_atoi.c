@@ -17,6 +17,15 @@ int	ft_isdigit(int n)
 	return ('0' <= n && n <= '9');
 }
 
+void	is_end(const char *nbr)
+{
+	if (*nbr != '\0')
+	{
+		ft_putstr("\033[38;2;255;0;0m		[ BAD PID ]\n\033[0m");
+		exit(1);
+	}
+}
+
 int	ft_atoi(const char *nbr)
 {
 	int	n;
@@ -42,5 +51,5 @@ int	ft_atoi(const char *nbr)
 		n = n * 10 + (*nbr - '0');
 		nbr++;
 	}
-	return (n * s);
+	return (is_end(nbr), n * s);
 }

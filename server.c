@@ -16,25 +16,34 @@ void	msg(int sgn, siginfo_t *awdi, void *cntxt)
 {
 	static char	c;
 	static char	bit_count;
+	static int	pid;
 
+	if (pid != awdi->si_pid)
+	{
+		bit_count = 0;
+		c = 0;
+		pid = awdi->si_pid;
+	}
 	(void)cntxt;
 	c = (c << 1) | (sgn == SIGUSR1);
 	bit_count++;
 	if (bit_count == 8)
 	{
 		if (c == '\0')
+		{
 			ft_putchar('\n');
+			kill(awdi->si_pid, SIGUSR1);
+		}
 		else
 			ft_putchar(c);
 		bit_count = 0;
 		c = 0;
 	}
-	kill(awdi->si_pid, SIGUSR1);
 }
 
-int	main()
+int	main(void)
 {
-	struct sigaction iwa;
+	struct sigaction	iwa;
 
 	iwa.sa_sigaction = msg;
 	iwa.sa_flags = SA_SIGINFO;
@@ -44,5 +53,7 @@ int	main()
 	ft_putstr("hahowa l pid : ");
 	ft_putnbr(getpid());
 	ft_putstr("\n3ish\n");
-	while (1);
+	while (1)
+	{
+	}
 }

@@ -11,11 +11,16 @@ XCLT = client
 all : $(XSRV) $(XCLT)
 
 $(XSRV) :
-	$(CC) $(CFLAGS) $(FCT) $(SRV) -o $@
+	@$(CC) $(CFLAGS) $(FCT) $(SRV) -o $@
 
 $(XCLT) :
-	$(CC) $(CFLAGS) $(FCT) $(CLT) -o $@
+	@$(CC) $(CFLAGS) $(FCT) $(CLT) -o $@
 
-fclean : 
-	rm -f $(XCLT) $(XSRV)
+clean :
+
+fclean : clean
+	@rm -f $(XCLT) $(XSRV)
+
 re : fclean all
+
+.PHONY : clean

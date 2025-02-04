@@ -20,6 +20,6 @@
 void	ft_putchar(int c);
 void	ft_putnbr(int n);
 void	ft_putstr(char *s);
-int	ft_atoi(const char *nbr);
+int		ft_atoi(const char *nbr);
 
 #endif

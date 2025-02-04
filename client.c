@@ -12,16 +12,13 @@
 
 #include "mth.h"
 
-int	g_i = 0;
-
 void	send_bit(int pid, int bit)
 {
 	if (bit)
 		kill(pid, SIGUSR1);
 	else
 		kill(pid, SIGUSR2);
-	g_i++;
-	usleep(100);
+	usleep(10);
 }
 
 void	send_char(int pid, char c)
@@ -42,12 +39,7 @@ void	send_msg(int pid, char *str)
 
 void	received(int sig)
 {
-	int	x;
-
-	x = 0;
 	if (sig == SIGUSR1)
-		x++;
-	if (x == g_i)
 		ft_putstr("\033[38;2;0;255;0m		safi rah wsal ✅\n\033[0m");
 }
 
@@ -58,7 +50,7 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		ft_putstr("		la ghit 2 arg.. [ ./client <pid> <message> ]\n");
+		ft_putstr("		la ghir 2 arg.. [ ./client <pid> <message> ]\n");
 		return (1);
 	}
 	pid = ft_atoi(av[1]);
