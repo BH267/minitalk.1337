@@ -30,7 +30,10 @@ void	msg(int sgn, siginfo_t *awdi, void *cntxt)
 	if (bit_count == 8)
 	{
 		if (c == '\0')
+		{
 			ft_putchar('\n');
+			kill(awdi->si_pid, SIGUSR1);
+		}
 		else
 			ft_putchar(c);
 		bit_count = 0;
@@ -44,11 +47,12 @@ int	main(void)
 
 	iwa.sa_sigaction = msg;
 	iwa.sa_flags = SA_SIGINFO;
+	sigemptyset(&iwa.sa_mask);
 	sigaction(SIGUSR1, &iwa, NULL);
 	sigaction(SIGUSR2, &iwa, NULL);
-	ft_putstr("\033[38;2;255;255;0mhahowa l pid : \033[0m");
+	ft_putstr("\033[38;2;0;255;255mhahowa l pid : \033[0m");
 	ft_putnbr(getpid());
-	ft_putstr("\033[38;2;255;255;0m\n3ish\n\033[0m");
+	ft_putstr("\033[38;2;0;255;255m\n3ish\n\033[0m");
 	while (1)
 	{
 	}

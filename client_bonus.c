@@ -37,9 +37,16 @@ void	send_msg(int pid, char *str)
 	send_char(pid, '\0');
 }
 
+void	received(int sig)
+{
+	if (sig == SIGUSR1)
+		ft_putstr("\033[38;2;0;255;0m		safi rah wsal ✅\n\033[0m");
+}
+
 int	main(int ac, char **av)
 {
 	int					pid;
+	struct sigaction	awdi;
 
 	if (ac != 3)
 	{
@@ -49,5 +56,8 @@ int	main(int ac, char **av)
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 		return (ft_putstr("\033[38;2;255;0;0m		ashawa kadir\n\033[0m"), 1);
+	awdi.sa_handler = received;
+	awdi.sa_flags = 0;
+	sigaction(SIGUSR1, &awdi, NULL);
 	send_msg(pid, av[2]);
 }
