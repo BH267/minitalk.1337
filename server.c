@@ -44,6 +44,7 @@ int	main(void)
 
 	iwa.sa_sigaction = msg;
 	iwa.sa_flags = SA_SIGINFO;
+	sigemptyset(&iwa.sa_mask);
 	sigaction(SIGUSR1, &iwa, NULL);
 	sigaction(SIGUSR2, &iwa, NULL);
 	ft_putstr("\033[38;2;255;255;0mhahowa l pid : \033[0m");

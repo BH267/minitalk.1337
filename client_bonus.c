@@ -58,6 +58,7 @@ int	main(int ac, char **av)
 		return (ft_putstr("\033[38;2;255;0;0m		ashawa kadir\n\033[0m"), 1);
 	awdi.sa_handler = received;
 	awdi.sa_flags = 0;
+	sigemptyset(&iwa.sa_mask);
 	sigaction(SIGUSR1, &awdi, NULL);
 	send_msg(pid, av[2]);
 }
