@@ -15,9 +15,13 @@
 void	send_bit(int pid, int bit)
 {
 	if (bit)
-		kill(pid, SIGUSR1);
+	{
+		if (kill(pid, SIGUSR1) == -1 )
+			return (ft_putstr("kill failedn\n"), exit(1));
+	}
 	else
-		kill(pid, SIGUSR2);
+		if (kill(pid, SIGUSR2) == -1 )
+			return (ft_putstr("kill failedn\n"), exit(1));
 	usleep(10);
 }
 
